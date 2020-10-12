@@ -1,0 +1,51 @@
+﻿<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree layui-bg-black">
+            <% var ChannelList = new DAL.ChannelServices().GetTopChannel();
+            if (ChannelList.Count > 0)
+            {
+            foreach (var item in ChannelList)
+            {%>
+            <li class="layui-nav-item">
+                <a href="<%=!string.IsNullOrEmpty(item.WebPath)?item.WebPath:" javascript:;" %>" style="padding-left: 15px;"><%=item.Title %></a>
+                <% var ChannelList2 = new DAL.ChannelServices().GetChildChannel(item.Id);
+                if (ChannelList2.Count > 0)
+                {%>
+                <dl class="layui-nav-child">
+                    <% foreach (var item2 in ChannelList2)
+                    {%>
+                    <dd>
+                        <a href="<%=!string.IsNullOrEmpty(item2.WebPath)?item2.WebPath:" javascript:;" %>" style="padding-left: 30px;"><%=item2.Title %></a>
+                        <% var ChannelList3 = new DAL.ChannelServices().GetChildChannel(item2.Id);
+                        if (ChannelList3.Count > 0)
+                        {%>
+                        <dl class="layui-nav-child">
+                            <% foreach (var item3 in ChannelList3)
+                            {%>
+                            <dd>
+                                <a href="<%=!string.IsNullOrEmpty(item3.WebPath)?item3.WebPath:" javascript:;" %>" style="padding-left: 45px;"><%=item3.Title %></a>
+                                <% var ChannelList4 = new DAL.ChannelServices().GetChildChannel(item3.Id);
+                                if (ChannelList4.Count > 0)
+                                {%>
+                                <dl class="layui-nav-child">
+                                    <% foreach (var item4 in ChannelList4)
+                                    {%>
+                                    <dd><a href="<%=!string.IsNullOrEmpty(item4.WebPath)?item4.WebPath:" javascript:;" %>" style="padding-left: 60px;"><%=item4.Title %></a></dd>
+                                    <%}%>
+                                </dl>
+                                <%}%>
+                            </dd>
+                            <%} %>
+                        </dl>
+                        <%}%>
+                    </dd>
+                    <%} %>
+                </dl>
+                <% }%>
+            </li>
+            <%}
+            }%>
+        </ul>
+    </div>
+</div>
